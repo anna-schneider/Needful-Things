@@ -3,7 +3,7 @@ import "./App.css"
 function App() {
 	return (
 		<div className="App">
-			<header className="App-header">Needful Things</header>
+			<header className="App-header">2020's NEEDFUL THINGS</header>
 		</div>
 	)
 }
