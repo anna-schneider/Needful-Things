@@ -1,0 +1,7 @@
+header {
+	display: flex;
+	justify-content: center;
+	/* flex-direction: row-wrap; */
+	font-family: "Benguiat";
+	font-size: 75px;
+}
