@@ -7,15 +7,31 @@ import "./index.css"
 import App from "./App"
 import reportWebVitals from "./reportWebVitals"
 
+//Building Shopify client
 const client = Client.buildClient({
 	storefrontAccessToken: "REACT_APP_SHOPIFY_KEY",
 	domain: "2020s-needful-things.myshopify.com",
 })
+store.dispatch({ type: "CLIENT_CREATED", payload: client })
+
+//Called after synchronous buildClient
+client.product.fetchAll().then((res) => {
+	store.dispatch({ type: "PRODUCTS_FOUND", payload: res })
+})
+client.checkout.create().then((res) => {
+	store.dispatch({ type: "CHECKOUT_FOUND", payload: res })
+})
+client.shop.fetchInfo().then((res) => {
+	store.dispatch({ type: "SHOP_FOUND", payload: res })
+})
 
 ReactDOM.render(
-	<React.StrictMode>
-		<App />
-	</React.StrictMode>,
+	<Provider store={store}>
+		<React.StrictMode>
+			<App />
+		</React.StrictMode>
+		,
+	</Provider>,
 	document.getElementById("root")
 )
 
