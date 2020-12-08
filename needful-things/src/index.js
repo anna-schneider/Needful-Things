@@ -7,6 +7,11 @@ import "./index.css"
 import App from "./App"
 import reportWebVitals from "./reportWebVitals"
 
+const client = Client.buildClient({
+	storefrontAccessToken: "REACT_APP_SHOPIFY_KEY",
+	domain: "2020s-needful-things.myshopify.com",
+})
+
 ReactDOM.render(
 	<React.StrictMode>
 		<App />
