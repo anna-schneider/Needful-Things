@@ -5,13 +5,14 @@ import "./App.css"
 import Header from "./components/Header/Header"
 import Cart from "./components/Shopify/Cart"
 import store from "./store"
+import Products from "./components/Shopify/Products"
 
 // let client = ShopifyBuy.buildClient({
 // 	domain: "2020s-Needful-Things.myshopify.com",
 // 	storefrontAccessToken: "REACT_APP_SHOPIFY_KEY",
 // })
 
-class App extends Component() {
+class App extends Component {
 	constructor() {
 		super()
 		this.updateQuantityInCart = this.updateQuantityInCart.bind(this)
@@ -19,7 +20,49 @@ class App extends Component() {
 		this.handleCartClose = this.handleCartClose.bind(this)
 		this.handleCartOpen = this.handleCartOpen.bind(this)
 	}
+	updateQuantityInCart(lineItemId, quantity) {
+		const state = store.getState() // state from redux store
+		const checkoutId = state.checkout.id
+		const lineItemsToUpdate = [
+			{ id: lineItemId, quantity: parseInt(quantity, 10) },
+		]
+		state.client.checkout
+			.updateLineItems(checkoutId, lineItemsToUpdate)
+			.then((res) => {
+				store.dispatch({
+					type: "UPDATE_QUANTITY_IN_CART",
+					payload: { checkout: res },
+				})
+			})
+	}
+	removeLineItemInCart(lineItemId) {
+		const state = store.getState() // state from redux store
+		const checkoutId = state.checkout.id
+		state.client.checkout
+			.removeLineItems(checkoutId, [lineItemId])
+			.then((res) => {
+				store.dispatch({
+					type: "REMOVE_LINE_ITEM_IN_CART",
+					payload: { checkout: res },
+				})
+			})
+	}
+	handleCartClose() {
+		store.dispatch({ type: "CLOSE_CART" })
+	}
+	handleCartOpen() {
+		store.dispatch({ type: "OPEN_CART" })
+	}
 	render() {
+		//state from Redux store
+		const state = store.getState()
+		let Products = (
+			<Products
+				products={state.products}
+				client={state.products}
+				addVariantToCart={this.addVariantToCart}
+			/>
+		)
 		return (
 			<div className="App">
 				<Header />
@@ -38,4 +81,4 @@ class App extends Component() {
 	}
 }
 
-export default App
+export default connect((state) => state)(App)
