@@ -56,21 +56,22 @@ class App extends Component {
 	render() {
 		//state from Redux store
 		const state = store.getState()
-		let Products = (
-			<Products
-				products={state.products}
-				client={state.products}
-				addVariantToCart={this.addVariantToCart}
-			/>
-		)
+		// let Products = []
+		// Products = (
+		// 	<Products
+		// 		products={state.products}
+		// 		client={state.products}
+		// 		addVariantToCart={this.addVariantToCart}
+		// 	/>
+		// )
 		return (
 			<div className="App">
 				<Header />
 				<div>
 					...
 					<Cart
-						checkout={this.state.checkout}
-						isCartOpen={this.state.isCartOpen}
+						checkout={state.checkout}
+						isCartOpen={state.isCartOpen}
 						handleCartClose={this.handleCartClose}
 						updateQuantityInCart={this.updateQuantityInCart}
 						removeLineItemInCart={this.removeLineItemInCart}
