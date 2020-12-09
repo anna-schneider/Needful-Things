@@ -5,13 +5,14 @@ import "./App.css"
 import Header from "./components/Header/Header"
 import Cart from "./components/Shopify/Cart"
 import store from "./store"
+import Products from "./components/Shopify/Products"
 
 // let client = ShopifyBuy.buildClient({
 // 	domain: "2020s-Needful-Things.myshopify.com",
 // 	storefrontAccessToken: "REACT_APP_SHOPIFY_KEY",
 // })
 
-class App extends Component() {
+class App extends Component {
 	constructor() {
 		super()
 		this.updateQuantityInCart = this.updateQuantityInCart.bind(this)
@@ -55,6 +56,13 @@ class App extends Component() {
 	render() {
 		//state from Redux store
 		const state = store.getState()
+		let Products = (
+			<Products
+				products={state.products}
+				client={state.products}
+				addVariantToCart={this.addVariantToCart}
+			/>
+		)
 		return (
 			<div className="App">
 				<Header />
